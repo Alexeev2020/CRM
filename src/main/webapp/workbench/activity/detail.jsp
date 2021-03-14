@@ -84,9 +84,9 @@ String basePath = request.getScheme()+"://" +request.getServerName()+
 					html += ' <h5>'+n.noteContent+'</h5> ';
 					html += ' <font color="gray">市场活动</font> <font color="gray">-</font> <b>${activity.name}</b> <small style="color: gray;"> '+(n.editFlag==0?n.createTime:n.editTime)+' 由'+(n.editFlag==0?n.createBy:n.editBy)+'</small> ';
 					html += ' <div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;"> ';
-					html += ' <a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-edit"  onclick="editRemark('+n.id+')" style="font-size: 20px; color: #FF0000;"></span></a> ';
+					html += ' <a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-edit"  onclick="editRemark(\''+n.id+'\')" style="font-size: 20px; color: #FF0000;"></span></a> ';
 					html += ' &nbsp;&nbsp;&nbsp;&nbsp; ';
-					html += ' <a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-remove" onclick="deleteRemark('+n.id+')" style="font-size: 20px; color: #FF0000;"></span></a> ';
+					html += ' <a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-remove" onclick="deleteRemark(\''+n.id+'\')" style="font-size: 20px; color: #FF0000;"></span></a> ';
 					html += ' </div> ';
 					html += ' </div> ';
 					html += ' </div> ';

@@ -71,6 +71,11 @@ public class ActivityController {
         return vo;
     }
 
+    /**
+     * 删除市场活动
+     * @param request
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/delete.do")
     public boolean deleteActivity(HttpServletRequest request){
@@ -79,6 +84,11 @@ public class ActivityController {
         return flag;
     }
 
+    /**
+     *
+     * @param request
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/getUAA.do")
     public Map getUAA(HttpServletRequest request){
@@ -92,6 +102,12 @@ public class ActivityController {
         return map;
     }
 
+    /**
+     *
+     * @param activity
+     * @param request
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/updateActivity.do")
     public boolean updateActivity(Activity activity,HttpServletRequest request){
@@ -100,6 +116,11 @@ public class ActivityController {
         return flag;
     }
 
+    /**
+     *
+     * @param request
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/detail.do")
     public ModelAndView detail(HttpServletRequest request){
@@ -113,6 +134,12 @@ public class ActivityController {
         mv.setViewName("/workbench/activity/detail.jsp");
         return mv;
     }
+
+    /**
+     *
+     * @param request
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/queryRemarks.do")
     public List<ActivityRemark> queryRemarks(HttpServletRequest request){
@@ -120,6 +147,12 @@ public class ActivityController {
         List<ActivityRemark> activityRemarks = activityService.getRemarkById(request);
         return activityRemarks;
     }
+
+    /**
+     *
+     * @param request
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/editRemark.do")
     public int editRemark(HttpServletRequest request){
@@ -127,6 +160,12 @@ public class ActivityController {
         int count = activityService.editRemark(request);
         return count;
     }
+
+    /**
+     *
+     * @param request
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/deleteRemark.do")
     public int deleteRemark(HttpServletRequest request){
