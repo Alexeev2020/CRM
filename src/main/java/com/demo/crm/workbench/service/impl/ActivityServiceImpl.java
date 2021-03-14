@@ -1,6 +1,8 @@
 package com.demo.crm.workbench.service.impl;
 
 import com.demo.crm.settings.domain.User;
+import com.demo.crm.utils.DateTimeUtil;
+import com.demo.crm.utils.UUIDUtil;
 import com.demo.crm.vo.PaginationVO;
 import com.demo.crm.workbench.dao.ActivityDao;
 import com.demo.crm.workbench.dao.ActivityRemarkDao;
@@ -8,6 +10,7 @@ import com.demo.crm.workbench.domain.Activity;
 import com.demo.crm.workbench.domain.ActivityRemark;
 import com.demo.crm.workbench.service.ActivityService;
 import org.springframework.stereotype.Service;
+import sun.applet.resources.MsgAppletViewer;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -87,7 +90,6 @@ public class ActivityServiceImpl implements ActivityService {
             flag = false;
         }
         activityDao.delete(ids);
-
         return flag;
     }
 
@@ -115,27 +117,47 @@ public class ActivityServiceImpl implements ActivityService {
     public Activity getActivityDetail(HttpServletRequest request) {
 
         String id = request.getParameter("id");
-        Activity activity = activityDao.detail(id);
-        return activity;
+        return activityDao.detail(id);
     }
 
     @Override
     public List<ActivityRemark> getRemarkById(HttpServletRequest request) {
+
         String id = request.getParameter("id");
-        List<ActivityRemark> activityRemarks = activityRemarkDao.selectByAids(id);
-        return activityRemarks;
+        return activityRemarkDao.selectByAids(id);
     }
 
     @Override
     public int deleteRemark(HttpServletRequest request) {
         String id = request.getParameter("id");
-        int count = activityRemarkDao.deleteById(id);
-        return count;
+        return activityRemarkDao.deleteById(id);
     }
 
     @Override
-    public int editRemark(HttpServletRequest request) {
-        return 0;
+    public Map updateRemark(ActivityRemark remark,HttpServletRequest request) {
+
+        Map map = new HashMap();
+        remark.setId(getUUID());
+        remark.setCreateTime(getSysTime());
+        remark.setCreateBy(((User)request.getSession().getAttribute("user")).getName());
+        remark.setEditFlag("0");
+        int count = activityRemarkDao.insertRemark(remark);
+        map.put("remark",remark);
+        map.put("count",count);
+        return map;
+    }
+
+    @Override
+    public Map saveRemark(ActivityRemark remark, HttpServletRequest request) {
+        Map map = new HashMap();
+        remark.setId(getUUID());
+        remark.setCreateTime(getSysTime());
+        remark.setCreateBy(((User)request.getSession().getAttribute("user")).getName());
+        remark.setEditFlag("0");
+        int count = activityRemarkDao.insertRemark(remark);
+        map.put("remark",remark);
+        map.put("count",count);
+        return map;
     }
 
 

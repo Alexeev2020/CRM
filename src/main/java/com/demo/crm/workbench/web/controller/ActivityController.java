@@ -36,8 +36,7 @@ public class ActivityController {
     @RequestMapping("/getUserList.do")
     public List getUserList() {
         //查询用户信息
-        List<User> users = userService.findUsers();
-        return users;
+        return userService.findUsers();
     }
 
     /**
@@ -67,8 +66,7 @@ public class ActivityController {
     public PaginationVO queryActivity(HttpServletRequest request){
         System.out.println("进入查询Controller");
         //保存市场活动信息
-        PaginationVO vo = activityService.queryActivity(request);
-        return vo;
+        return activityService.queryActivity(request);
     }
 
     /**
@@ -80,8 +78,7 @@ public class ActivityController {
     @RequestMapping("/delete.do")
     public boolean deleteActivity(HttpServletRequest request){
         System.out.println("进入到市场活动信息删除Controller");
-        boolean flag = activityService.deleteActivity(request);
-        return flag;
+        return activityService.deleteActivity(request);
     }
 
     /**
@@ -112,8 +109,7 @@ public class ActivityController {
     @RequestMapping("/updateActivity.do")
     public boolean updateActivity(Activity activity,HttpServletRequest request){
         System.out.println("进入执行市场活动更新操作");
-        boolean flag = activityService.updateActivity(activity,request);
-        return flag;
+        return activityService.updateActivity(activity,request);
     }
 
     /**
@@ -144,8 +140,7 @@ public class ActivityController {
     @RequestMapping("/queryRemarks.do")
     public List<ActivityRemark> queryRemarks(HttpServletRequest request){
         //查询id对应用户的备注信息
-        List<ActivityRemark> activityRemarks = activityService.getRemarkById(request);
-        return activityRemarks;
+        return activityService.getRemarkById(request);
     }
 
     /**
@@ -154,11 +149,10 @@ public class ActivityController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/editRemark.do")
-    public int editRemark(HttpServletRequest request){
-        //编辑备注信息
-        int count = activityService.editRemark(request);
-        return count;
+    @RequestMapping("/updateRemark.do")
+    public Map updateRemark(ActivityRemark remark,HttpServletRequest request){
+        //保存备注信息
+        return activityService.updateRemark(remark,request);
     }
 
     /**
@@ -170,7 +164,19 @@ public class ActivityController {
     @RequestMapping("/deleteRemark.do")
     public int deleteRemark(HttpServletRequest request){
         //删除备注信息
-        int count = activityService.deleteRemark(request);
-        return count;
+        return activityService.deleteRemark(request);
+    }
+
+    /**
+     *
+     * @param remark
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/saveRemark.do")
+    public Map saveRemark(ActivityRemark remark,HttpServletRequest request){
+        //保存备注信息
+        return activityService.saveRemark(remark,request);
     }
 }

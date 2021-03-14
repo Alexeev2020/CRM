@@ -28,5 +28,10 @@
         where id=#{id}
     </delete>
 
+    <insert id="insertRemark" parameterType="com.demo.crm.workbench.domain.ActivityRemark">
+        insert into tbl_activity_remark (id,noteContent,createTime,createBy,editFlag,activityId)
+        values(#{id},#{noteContent},#{createTime},#{createBy},#{editFlag},#{activityId})
+    </insert>
+
 
 </mapper>

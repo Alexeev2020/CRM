@@ -19,7 +19,6 @@ String basePath = request.getScheme()+"://" +request.getServerName()+
 	var cancelAndSaveBtnDefault = true;
 	
 	$(function(){
-		
 
 		$("#remark").focus(function(){
 			if(cancelAndSaveBtnDefault){
@@ -65,7 +64,45 @@ String basePath = request.getScheme()+"://" +request.getServerName()+
             $(this).children("div").children("div").hide();
         })
 
+        $("#saveRemarkBtn").click(function () {
+
+            var noteContent=$("#remark").val();
+
+            $.ajax({
+                url:"workbench/activity/saveRemark.do",
+                data:{"noteContent":noteContent,"activityId":"${activity.id}"},
+                dataType:"json",
+                type:"POST",
+                success:function (data) {
+                    if (data.count==1){
+
+                        var html = "";
+
+                        html += ' <div id="'+data.remark.id+'" class="remarkDiv" style="height: 60px;"> ';
+                        html += ' <img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;"> ';
+                        html += ' <div style="position: relative; top: -40px; left: 40px;" > ';
+                        html += ' <h5>'+data.remark.noteContent+'</h5> ';
+                        html += ' <font color="gray">市场活动</font> <font color="gray">-</font> <b>${activity.name}</b> <small style="color: gray;"> '+data.remark.createTime+' 由'+data.remark.createBy+'</small> ';
+                        html += ' <div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;"> ';
+                        html += ' <a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-edit"  onclick="editRemark(\''+data.remark.id+'\')" style="font-size: 20px; color: #FF0000;"></span></a> ';
+                        html += ' &nbsp;&nbsp;&nbsp;&nbsp; ';
+                        html += ' <a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-remove" onclick="deleteRemark(\''+data.remark.id+'\')" style="font-size: 20px; color: #FF0000;"></span></a> ';
+                        html += ' </div> ';
+                        html += ' </div> ';
+                        html += ' </div> ';
+                        $("#remarkDiv").before(html);
+                        $("#remark").val("");
+                        $("#cancelBtn").click();
+
+                    }else{
+                        alert("保存失败")
+                    }
+                }
+            })
+        })
 	});
+
+
 
 	//显示市场活动备注函数
 	function showRemarks() {
@@ -78,7 +115,7 @@ String basePath = request.getScheme()+"://" +request.getServerName()+
 				var html = "";
 				$.each(data,function (i,n) {
 
-					html += ' <div class="remarkDiv" style="height: 60px;"> ';
+					html += ' <div id="'+n.id+'" class="remarkDiv" style="height: 60px;"> ';
 					html += ' <img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;"> ';
 					html += ' <div style="position: relative; top: -40px; left: 40px;" > ';
 					html += ' <h5>'+n.noteContent+'</h5> ';
@@ -101,10 +138,10 @@ String basePath = request.getScheme()+"://" +request.getServerName()+
             url:"workbench/activity/deleteRemark.do",
             data:{"id":id},
             dataType:"json",
-            type:"GET",
+            type:"POST",
             success:function (data) {
-                if (data.count==1){
-                    showRemarks()
+                if (data==1){
+                    $("#"+id).remove();
                 }else{
                     alert("删除失败")
                 }
@@ -113,20 +150,23 @@ String basePath = request.getScheme()+"://" +request.getServerName()+
     }
 
     function editRemark(id){
-        $.ajax({
+
+	    $("#editRemarkModal").modal("show");
+        /*$.ajax({
             url:"workbench/activity/editRemark.do",
             data:{"id":id},
             dataType:"json",
-            type:"GET",
+            type:"POST",
             success:function (data) {
-                if (data.count ==1){
+                if (data==1){
                     showRemarks();
                 }else{
                     alert("编辑失败")
                 }
             }
-        })
+        })*/
     }
+
 
 </script>
 
@@ -332,7 +372,7 @@ String basePath = request.getScheme()+"://" +request.getServerName()+
 				<textarea id="remark" class="form-control" style="width: 850px; resize : none;" rows="2"  placeholder="添加备注..."></textarea>
 				<p id="cancelAndSaveBtn" style="position: relative;left: 737px; top: 10px; display: none;">
 					<button id="cancelBtn" type="button" class="btn btn-default">取消</button>
-					<button type="button" class="btn btn-primary">保存</button>
+					<button id="saveRemarkBtn" type="button"  class="btn btn-primary">保存</button>
 				</p>
 			</form>
 		</div>
