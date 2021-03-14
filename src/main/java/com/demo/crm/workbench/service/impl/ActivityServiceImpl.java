@@ -137,11 +137,12 @@ public class ActivityServiceImpl implements ActivityService {
     public Map updateRemark(ActivityRemark remark,HttpServletRequest request) {
 
         Map map = new HashMap();
-        remark.setId(getUUID());
-        remark.setCreateTime(getSysTime());
-        remark.setCreateBy(((User)request.getSession().getAttribute("user")).getName());
-        remark.setEditFlag("0");
-        int count = activityRemarkDao.insertRemark(remark);
+        remark.setEditTime(getSysTime());
+        remark.setEditBy(((User)request.getSession().getAttribute("user")).getName());
+        remark.setEditFlag("1");
+        int count = activityRemarkDao.updateRemark(remark);
+        String id = request.getParameter("id");
+        ActivityRemark remark1 = activityRemarkDao.selectById(id);
         map.put("remark",remark);
         map.put("count",count);
         return map;

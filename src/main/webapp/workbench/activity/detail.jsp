@@ -53,9 +53,7 @@ String basePath = request.getScheme()+"://" +request.getServerName()+
 		$(".myHref").mouseout(function(){
 			$(this).children("span").css("color","#E6E6E6");
 		});
-		
-		//页面加载完成后，将根据id查询得到的备注信息铺值给页面
-		showRemarks();
+
 
         $("#remarkBody").on("mouseover",".remarkDiv",function(){
             $(this).children("div").children("div").show();
@@ -63,6 +61,9 @@ String basePath = request.getScheme()+"://" +request.getServerName()+
         $("#remarkBody").on("mouseout",".remarkDiv",function(){
             $(this).children("div").children("div").hide();
         })
+
+        //页面加载完成后，将根据id查询得到的备注信息铺值给页面
+        showRemarks();
 
         $("#saveRemarkBtn").click(function () {
 
@@ -82,7 +83,7 @@ String basePath = request.getScheme()+"://" +request.getServerName()+
                         html += ' <img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;"> ';
                         html += ' <div style="position: relative; top: -40px; left: 40px;" > ';
                         html += ' <h5>'+data.remark.noteContent+'</h5> ';
-                        html += ' <font color="gray">市场活动</font> <font color="gray">-</font> <b>${activity.name}</b> <small style="color: gray;"> '+data.remark.createTime+' 由'+data.remark.createBy+'</small> ';
+                        html += ' <font color="gray">市场活动</font> <font color="gray">-</font> <b>${activity.name}</b> <small style="color: gray;" id="s\''+data.remark.id+'\'"> '+data.remark.createTime+' 由'+data.remark.createBy+'</small> ';
                         html += ' <div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;"> ';
                         html += ' <a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-edit"  onclick="editRemark(\''+data.remark.id+'\')" style="font-size: 20px; color: #FF0000;"></span></a> ';
                         html += ' &nbsp;&nbsp;&nbsp;&nbsp; ';
@@ -104,32 +105,19 @@ String basePath = request.getScheme()+"://" +request.getServerName()+
         //更新修改的市场活动备注
         $("#updateRemarkBtn").click(function () {
 
+            var id = $("#remarkId").val();
 
             $.ajax({
                 url:"workbench/activity/updateRemark.do",
-                data:{"noteContent":$("#noteContent").val(),"activityId":"${activity.id}"},
+                data:{"id":id,"noteContent":$("#noteContent").val()},
                 dataType:"json",
                 type:"POST",
                 success:function (data) {
                     if (data.count==1){
 
-                        var html = "";
-
-                        html += ' <div id="'+data.remark.id+'" class="remarkDiv" style="height: 60px;"> ';
-                        html += ' <img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;"> ';
-                        html += ' <div style="position: relative; top: -40px; left: 40px;" > ';
-                        html += ' <h5>'+data.remark.noteContent+'</h5> ';
-                        html += ' <font color="gray">市场活动</font> <font color="gray">-</font> <b>${activity.name}</b> <small style="color: gray;"> '+data.remark.createTime+' 由'+data.remark.createBy+'</small> ';
-                        html += ' <div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;"> ';
-                        html += ' <a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-edit"  onclick="editRemark(\''+data.remark.id+'\')" style="font-size: 20px; color: #FF0000;"></span></a> ';
-                        html += ' &nbsp;&nbsp;&nbsp;&nbsp; ';
-                        html += ' <a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-remove" onclick="deleteRemark(\''+data.remark.id+'\')" style="font-size: 20px; color: #FF0000;"></span></a> ';
-                        html += ' </div> ';
-                        html += ' </div> ';
-                        html += ' </div> ';
-                        $("#remarkDiv").before(html);
-                        $("#remark").val("");
-                        $("#cancelBtn").click();
+                        $("#editRemarkModal").modal("hide");
+                        $("#t"+id).html(data.remark.noteContent);
+                        $("#s"+id).html(data.remark.editTime+" 由"+data.remark.editBy);
 
                     }else{
                         alert("更新失败")
@@ -155,8 +143,8 @@ String basePath = request.getScheme()+"://" +request.getServerName()+
 					html += ' <div id="'+n.id+'" class="remarkDiv" style="height: 60px;"> ';
 					html += ' <img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;"> ';
 					html += ' <div style="position: relative; top: -40px; left: 40px;" > ';
-					html += ' <h5>'+n.noteContent+'</h5> ';
-					html += ' <font color="gray">市场活动</font> <font color="gray">-</font> <b>${activity.name}</b> <small style="color: gray;"> '+(n.editFlag==0?n.createTime:n.editTime)+' 由'+(n.editFlag==0?n.createBy:n.editBy)+'</small> ';
+					html += ' <h5 id="t'+n.id+'">'+n.noteContent+'</h5> ';
+					html += ' <font color="gray">市场活动</font> <font color="gray">-</font> <b>${activity.name}</b> <small style="color: gray;" id="s\''+n.id+'\'"> '+(n.editFlag==0?n.createTime:n.editTime)+' 由'+(n.editFlag==0?n.createBy:n.editBy)+'</small> ';
 					html += ' <div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;"> ';
 					html += ' <a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-edit"  onclick="editRemark(\''+n.id+'\')" style="font-size: 20px; color: #FF0000;"></span></a> ';
 					html += ' &nbsp;&nbsp;&nbsp;&nbsp; ';
@@ -170,6 +158,7 @@ String basePath = request.getScheme()+"://" +request.getServerName()+
 		})
 	}
 
+	//删除备注
 	function deleteRemark(id) {
         $.ajax({
             url:"workbench/activity/deleteRemark.do",
@@ -187,6 +176,11 @@ String basePath = request.getScheme()+"://" +request.getServerName()+
     }
 
     function editRemark(id){
+	    //为update更新操作准备备注id值，放入隐藏域
+        $("#remarkId").val(id);
+	    //找到指定的文本域的内容
+        var noteContent = $("#t"+id).html();
+        $("#noteContent").val(noteContent);
 	    $("#editRemarkModal").modal("show");
     }
 

@@ -12,7 +12,11 @@ public interface ActivityRemarkDao {
 
     List<ActivityRemark> selectByAids(String id);
 
+    ActivityRemark selectById(String id);
+
     int deleteById(String id);
 
     int insertRemark(ActivityRemark remark);
+
+    int updateRemark(ActivityRemark remark);
 }
