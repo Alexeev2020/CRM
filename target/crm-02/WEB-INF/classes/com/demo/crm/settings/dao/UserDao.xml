@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.crm.settings.dao.UserDao">
+
+    <select id="loginQuery"  resultType="com.demo.crm.settings.domain.User">
+        select * from tbl_user where loginAct=#{loginAct} and loginPwd=#{loginPwd}
+    </select>
+
+    <select id="selectUsers" resultType="com.demo.crm.settings.domain.User">
+        select * from tbl_user ;
+    </select>
+    <!--<insert id="">
+        insert into  values (#{},#{},#{})
+    </insert>-->
+</mapper>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--mybatis主配置文件，在SSM框架下只进行Setting的设置，为实体类取别名，定位mapper映射文件位置-->
+<!--在typeAliases里面指定的包里面的实体类的别名就是类名-->
+<configuration>
+  <!--setting可以指定诸如日志文件之类-->
+  <settings>
+    <setting name="logImpl" value="STDOUT_LOGGING"/>
+  </settings>
+
+  <!--设置别名-->
+  <typeAliases>
+    <!--实体类所在包名-->
+    <package name="com.demo.crm.settings.domain"/>
+  </typeAliases>
+
+  <!--//指定sql mapper文件的位置-->
+  <mappers>
+    <!--一个mapper标签指定一个sql mapper文件的位置——从类路径开始的路径信息-->
+    <!--<package name="com.demo.dao"/>-->
+    <!--<mapper resource="com/demo/dao/Dao.xml"/>-->
+    <package name="com.demo.crm.settings.dao"/>
+    <package name="com.demo.crm.workbench.dao"/>
+  </mappers>
+</configuration>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
