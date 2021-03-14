@@ -120,4 +120,18 @@ public class ActivityController {
         List<ActivityRemark> activityRemarks = activityService.getRemarkById(request);
         return activityRemarks;
     }
+    @ResponseBody
+    @RequestMapping("/editRemark.do")
+    public int editRemark(HttpServletRequest request){
+        //编辑备注信息
+        int count = activityService.editRemark(request);
+        return count;
+    }
+    @ResponseBody
+    @RequestMapping("/deleteRemark.do")
+    public int deleteRemark(HttpServletRequest request){
+        //删除备注信息
+        int count = activityService.deleteRemark(request);
+        return count;
+    }
 }

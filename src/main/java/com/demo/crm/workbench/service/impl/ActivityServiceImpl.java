@@ -126,5 +126,17 @@ public class ActivityServiceImpl implements ActivityService {
         return activityRemarks;
     }
 
+    @Override
+    public int deleteRemark(HttpServletRequest request) {
+        String id = request.getParameter("id");
+        int count = activityRemarkDao.deleteById(id);
+        return count;
+    }
+
+    @Override
+    public int editRemark(HttpServletRequest request) {
+        return 0;
+    }
+
 
 }

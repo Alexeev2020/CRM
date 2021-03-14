@@ -57,6 +57,14 @@ String basePath = request.getScheme()+"://" +request.getServerName()+
 		
 		//页面加载完成后，将根据id查询得到的备注信息铺值给页面
 		showRemarks();
+
+        $("#remarkBody").on("mouseover",".remarkDiv",function(){
+            $(this).children("div").children("div").show();
+        })
+        $("#remarkBody").on("mouseout",".remarkDiv",function(){
+            $(this).children("div").children("div").hide();
+        })
+
 	});
 
 	//显示市场活动备注函数
@@ -76,9 +84,9 @@ String basePath = request.getScheme()+"://" +request.getServerName()+
 					html += ' <h5>'+n.noteContent+'</h5> ';
 					html += ' <font color="gray">市场活动</font> <font color="gray">-</font> <b>${activity.name}</b> <small style="color: gray;"> '+(n.editFlag==0?n.createTime:n.editTime)+' 由'+(n.editFlag==0?n.createBy:n.editBy)+'</small> ';
 					html += ' <div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;"> ';
-					html += ' <a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #E6E6E6;"></span></a> ';
+					html += ' <a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-edit"  onclick="editRemark()" style="font-size: 20px; color: #FF0000;"></span></a> ';
 					html += ' &nbsp;&nbsp;&nbsp;&nbsp; ';
-					html += ' <a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-remove" style="font-size: 20px; color: #E6E6E6;"></span></a> ';
+					html += ' <a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-remove" onclick="deleteRemark()" style="font-size: 20px; color: #FF0000;"></span></a> ';
 					html += ' </div> ';
 					html += ' </div> ';
 					html += ' </div> ';
@@ -86,10 +94,19 @@ String basePath = request.getScheme()+"://" +request.getServerName()+
 				$("#remarkDiv").before(html);
 			}
 		})
-		
 	}
 
-	
+	function deleteRemark() {
+	    
+	    alert("删除失败")
+
+    }
+
+    function editRemark() {
+        alert("删除失败")
+
+    }
+
 </script>
 
 </head>
@@ -252,8 +269,8 @@ String basePath = request.getScheme()+"://" +request.getServerName()+
 	</div>
 	
 	<!-- 备注 -->
-	<div style="position: relative; top: 30px; left: 40px;">
-		<div class="page-header">
+	<div style="position: relative; top: 30px; left: 40px;" id="remarkBody">
+		<div class="page-header" >
 			<h4>备注</h4>
 		</div>
 

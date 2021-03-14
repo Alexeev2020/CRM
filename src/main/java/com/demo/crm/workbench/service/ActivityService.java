@@ -24,4 +24,8 @@ public interface ActivityService {
     Activity getActivityDetail(HttpServletRequest request);
 
     List<ActivityRemark> getRemarkById(HttpServletRequest request);
+
+    int deleteRemark(HttpServletRequest request);
+
+    int editRemark(HttpServletRequest request);
 }
