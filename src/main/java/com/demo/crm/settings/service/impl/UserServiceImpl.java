@@ -17,6 +17,12 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserDao userDao;
 
+    /**
+     * 进行登录验证操作
+     * @param request 请求
+     * @return 返回登录成功的用户信息
+     * @throws LoginException 登录验证过程中抛出自定义登录异常
+     */
     @Override
     public User login(HttpServletRequest request) throws LoginException{
         //获取参数

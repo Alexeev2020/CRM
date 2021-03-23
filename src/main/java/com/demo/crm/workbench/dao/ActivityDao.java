@@ -14,6 +14,7 @@ public interface ActivityDao {
 
     //查询满足查询条件的市场活动信息返回市场活动对象集合
     List<Activity> selectActivity(Map<String,Object> map);
+
     //获得满足查询条件de市场活动总条数
     int getTotal(Map<String,Object> map);
 

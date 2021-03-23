@@ -12,6 +12,7 @@ import java.util.Map;
 
 @Service
 public interface ActivityService {
+
     int saveActivity(Activity activity,HttpServletRequest request);
 
     PaginationVO queryActivity(HttpServletRequest request);

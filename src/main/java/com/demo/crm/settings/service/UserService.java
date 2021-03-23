@@ -9,6 +9,8 @@ import java.util.List;
 
 @Service
 public interface UserService {
+
     User login(HttpServletRequest request) throws LoginException;
+
     List<User> findUsers();
 }

@@ -74,6 +74,7 @@
         </where>
 
     </select>
+
     <insert id="insertActivity" >
         insert into tbl_activity (id,owner,name,startDate,endDate,cost,description,createTime,createBy)
         values (#{id},#{owner},#{name},#{startDate},#{endDate},#{cost},#{description},#{createTime},#{createBy})
@@ -86,13 +87,16 @@
             #{id}
         </foreach>
     </delete>
+
     <select id="selectActivityById" parameterType="String" resultType="com.demo.crm.workbench.domain.Activity">
         select * from tbl_activity where id=#{id}
     </select>
+
     <update id="updateActivity" >
         update tbl_activity set
         owner=#{owner},name=#{name},startDate=#{startDate},endDate=#{endDate},cost=#{cost},
         description=#{description},editTime=#{editTime},editBy=#{editBy}
         where id=#{id}
     </update>
+
 </mapper>
